@@ -30,7 +30,7 @@ sequenceDiagram
     Note right of browser: The browser executes the callback function that renders the notes
 ```
 
-## Creating a note on the page
+## Exercise 4 - Creating a note on the page
 ```mermaid
 sequenceDiagram
     participant browser
@@ -64,6 +64,5 @@ sequenceDiagram
     deactivate server
     
     Note right of browser: The browser execute the event handler
-    
-
 ```
+
