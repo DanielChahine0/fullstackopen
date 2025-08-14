@@ -1,19 +1,36 @@
 import { useState } from 'react'
 
-const App = () => {
-
-  const [ counter, setCounter ] = useState(0)
-
-
-  setTimeout(
-    () => setCounter(counter + 1),
-    1000
+const Display = ({counter}) => {
+  return (
+    <div>
+      {counter}
+    </div>
   )
-  
-  console.log('rendering...', counter)
+}
+
+const Button = ({onClick, text}) => {
+  return (
+    <button onClick={onClick}>
+      {text}
+    </button>
+  )
+}
+
+const App = () => {
+  const [ counter, setCounter ] = useState(0)
+  const increase = () => setCounter(counter + 1);
+  const decrease = () => setCounter(counter - 1);
+  const double = () => setCounter(counter*2);
+  const zero = () => setCounter(0);
 
   return (
-    <div>{counter}</div>
+    <div>
+      <Display counter={counter} />
+      <Button onClick={increase} text={"Increase!!"}/>
+      <Button onClick={decrease} text={"Decrease!!"}/>
+      <Button onClick={zero} text={"Zero!!"}/>
+      <Button onClick={double} text={"Double!!"}/>
+    </div>
   )
 }
 
