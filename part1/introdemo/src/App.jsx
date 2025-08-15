@@ -1,20 +1,8 @@
 import { useState } from 'react'
 
-const Display = ({counter}) => {
-  return (
-    <div>
-      {counter}
-    </div>
-  )
-}
+const Display = ({ counter }) => <div>{counter}</div>
 
-const Button = ({onClick, text}) => {
-  return (
-    <button onClick={onClick}>
-      {text}
-    </button>
-  )
-}
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const App = () => {
   const [ counter, setCounter ] = useState(0)
@@ -26,10 +14,10 @@ const App = () => {
   return (
     <div>
       <Display counter={counter} />
-      <Button onClick={increase} text={"Increase!!"}/>
-      <Button onClick={decrease} text={"Decrease!!"}/>
-      <Button onClick={zero} text={"Zero!!"}/>
-      <Button onClick={double} text={"Double!!"}/>
+      <Button onClick={increase} text={"Increase!!"} />
+      <Button onClick={decrease} text={"Decrease!!"} />
+      <Button onClick={zero} text={"Zero!!"} />
+      <Button onClick={double} text={"Double!!"} />
     </div>
   )
 }
