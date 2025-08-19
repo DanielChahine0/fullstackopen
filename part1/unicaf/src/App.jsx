@@ -8,7 +8,7 @@ const Button = ({ onClick, text }) => {
   )
 }
 
-const Display = ({ good, neutral, bad }) => {
+const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad
   const average = (good - bad) / total
   const positive = good / total * 100
@@ -51,7 +51,7 @@ const App = () => {
       <Button onClick={increaseNeutral} text='neutral'/>
       <Button onClick={increaseBad} text='bad'/>
       <h1>Statistics</h1>
-      <Display good={good} neutral={neutral} bad={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
