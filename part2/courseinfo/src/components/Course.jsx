@@ -1,57 +1,100 @@
-const Header = ({ name }) => {
-  console.log("header", name)
+// const Header = ({ name }) => {
+//   console.log("header", name)
+//   return (
+//     <h2>
+//       {name}
+//     </h2>
+//   )
+// }
+
+// const Part = ({ part }) => {
+//   console.log("part:", part)
+//   return (
+//     <p>
+//       {part.name} {part.exercises}
+//     </p>
+//   )
+// }
+
+// const Content = ({ content }) => {
+//   console.log("content:", content)
+//   return (
+//     <div>
+//       {content.map(note => {
+//         return <Part key={note.id} part={note}/>
+//       })}
+//     </div>
+//   )
+// }
+
+
+// const Total = ({parts}) => {
+//   console.log('total', parts)
+//   const total = parts.reduce((sum, part) => {
+//     return sum + part.exercises
+//   },0)
+
+//   return (
+//     <div>
+//       <p>
+//         <strong>total of {total} exercises</strong>
+//       </p>
+//     </div>
+//   )
+// }
+
+// const Course = ({ course }) => {
+//   console.log("course "+ course.id+":",course)
+//   const name = course.name
+//   const parts = course.parts
+//   return (
+//     <div>
+//       <Header name={name} />
+//       <Content content={parts} />
+//       <Total parts={parts}/>
+//     </div>
+//   )
+// }
+
+const Header = (props) => {
+  const course = props.course
+  console.log('header:', course)
+  
   return (
-    <h2>
-      {name}
-    </h2>
+    <h2>{course}</h2>
   )
 }
 
-const Part = ({ part }) => {
-  console.log("part:", part)
-  return (
-    <p>
-      {part.name} {part.exercises}
-    </p>
-  )
-}
-
-const Content = ({ content }) => {
-  console.log("content:", content)
+const Content = (props) => {
+  const {parts} = props
   return (
     <div>
-      {content.map(note => {
-        return <Part key={note.id} part={note}/>
+      {parts.map((part) => {
+        return <Part key={part.id} part={part} />
       })}
+      <Total total={parts.reduce((sum, part) => sum + part.exercises, 0)} />
     </div>
   )
 }
 
+const Part = (props) => (
+  <p>
+    {props.part.name} {props.part.exercises}
+  </p>
+)
 
-const Total = ({parts}) => {
-  console.log('total', parts)
-  const total = parts.reduce((sum, part) => {
-    return sum + part.exercises
-  },0)
-
+const Total = (props) => {
   return (
-    <div>
-      <p>
-        <strong>total of {total} exercises</strong>
-      </p>
-    </div>
+    <p><strong>Total of {props.total} exercises</strong></p>
   )
 }
 
-const Course = ({ course }) => {
-  console.log("course "+ course.id+":",course)
-  const name = course.name
-  const parts = course.parts
+const Course = (props) => {
+  const {course} = props
   return (
     <div>
-      <Header name={name} />
-      <Content content={parts} />
-      <Total parts={parts}/>
+      <Header course={course.name} />
+      <Content parts={course.parts} />
     </div>
   )
 }
