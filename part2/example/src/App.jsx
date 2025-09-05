@@ -10,6 +10,7 @@ const App = (props) => {
     console.log('button clicked', event)
   }
 
+
   return (
     <div>
       <h1>Notes</h1>
@@ -20,7 +21,7 @@ const App = (props) => {
       </ul>
 
       <form onSubmit={addNote}>
-          <input />
+          <input value={newNote}/>
           <button type="submit">save</button>
       </form>
     </div>
