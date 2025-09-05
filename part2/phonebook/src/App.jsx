@@ -14,6 +14,12 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     console.log(event)
+    if (persons.map(p => p.name).indexOf(newName) !== -1) {
+      alert(`${newName} is already added to phonebook`)
+      
+      return
+    }
+
     const newPerson = {
       name: newName,
       id: persons.length + 1
