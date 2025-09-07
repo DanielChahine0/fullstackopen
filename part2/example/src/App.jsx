@@ -2,6 +2,17 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Note from './components/Note'
 
+const Note = ({ note, toggleImportance }) => {
+  const label = note.important ? 'make not important' : 'make important'
+
+  return (
+    <li>
+      {note.content}
+      <button onClick={toggleImportance}>{label}</button>
+    </li>
+  )
+}
+
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('new note...')
