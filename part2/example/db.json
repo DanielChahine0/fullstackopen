@@ -13,7 +13,7 @@
     {
       "id": "d730",
       "content": "fasdf",
-      "important": false
+      "important": true
     },
     {
       "id": "e189",
@@ -23,7 +23,7 @@
     {
       "id": "07d8",
       "content": "asf",
-      "important": false
+      "important": true
     },
     {
       "id": "4b8c",
@@ -44,6 +44,11 @@
       "id": "a8c9",
       "content": "as",
       "important": true
+    },
+    {
+      "id": "95f1",
+      "content": "new note...",
+      "important": false
     }
   ]
 }
