@@ -21,19 +21,22 @@ const App = () => {
 
   const addNote = (event) => {
     event.preventDefault()
-    console.log('button clicked', event)
     const noteObject = {
       content: newNote,
-      important: Math.random() < 0.5,
-      id: notes.length + 1,
+      important: Math.random() < 0.5
     }
+
+    axios.post('http://localhost:3001/notes', noteObject).then(
+      (response) => {
+        console.log(response)
+        setNotes(notes.concat(response.data))
+        setNewNote('')
+      }
+    )
     
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
