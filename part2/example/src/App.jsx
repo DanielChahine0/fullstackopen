@@ -2,16 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Note from './components/Note'
 
-const Note = ({ note, toggleImportance }) => {
-  const label = note.important ? 'make not important' : 'make important'
 
-  return (
-    <li>
-      {note.content}
-      <button onClick={toggleImportance}>{label}</button>
-    </li>
-  )
-}
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -53,6 +44,10 @@ const App = () => {
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
   
+  const toggleImportanceOf = (id) => {
+    console.log('importance of '+ id + ' needs to be toggled')
+  }
+
   return (
     <div>
       <h1>Notes</h1>
@@ -63,7 +58,11 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map(note =>
-          <Note key={note.id} note={note}/>
+          <Note 
+            key={note.id} 
+            note={note}
+            toggleImportance={() => toggleImportanceOf(note.id)}
+          />
           )}
       </ul>
 
