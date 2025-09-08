@@ -16,7 +16,7 @@ const App = () => {
       }
     )
   }, [])
-  
+
   const toggleImportanceOf = (id) => {
     // Copy of toggled note
     const note = notes.find(n => n.id === id)
@@ -42,9 +42,8 @@ const App = () => {
       important: Math.random() < 0.5
     }
 
-    axios.post('http://localhost:3001/notes', noteObject).then(
+    noteService.create(noteObject).then(
       (response) => {
-        console.log(response)
         setNotes(notes.concat(response.data))
         setNewNote('')
       }
