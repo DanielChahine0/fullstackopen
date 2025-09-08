@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Note from './components/Note'
-
-
+import noteService from './services/notes'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('new note...')
   const [showAll, setShowAll] = useState(true)
 
-  const hook = () => {
-    axios.get('http://localhost:3001/notes').then(
+  useEffect(() => {
+    noteService.getAll().then(
       (response) => {
-        const renderedNotes = response.data
-        setNotes(renderedNotes)
+        // console.log(response.data)
+        setNotes(response.data)
       }
     )
-  }
-
-  useEffect(hook, [])
+  }, [])
   console.log('rendered', notes.length, 'notes')
 
   const addNote = (event) => {
