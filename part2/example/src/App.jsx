@@ -35,6 +35,8 @@ const App = () => {
     )
   }
 
+  
+
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
