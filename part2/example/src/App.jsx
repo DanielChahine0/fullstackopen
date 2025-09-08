@@ -11,12 +11,13 @@ const App = () => {
   // Fetch the notes from the JSON server 
   useEffect(() => {
     noteService.getAll().then(
-      (response) => {
-        setNotes(response.data)
+      (initialNotes) => {
+        setNotes(initialNotes)
       }
     )
   }, [])
 
+  // Changes the importance of a note
   const toggleImportanceOf = (id) => {
     // Copy of toggled note
     const note = notes.find(n => n.id === id)
@@ -24,10 +25,10 @@ const App = () => {
 
     // Update the server & the state variable 
     noteService.update(id, changedNote).then(
-      (response) => {
+      (returnedNotes) => {
         setNotes(notes.map(
           (note) => {
-            if (note.id === id) return response.data
+            if (note.id === id) return returnedNotes
             return note
           }
         ))
@@ -35,8 +36,7 @@ const App = () => {
     )
   }
 
-  
-
+  // Adds a new note
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
@@ -45,8 +45,8 @@ const App = () => {
     }
 
     noteService.create(noteObject).then(
-      (response) => {
-        setNotes(notes.concat(response.data))
+      (returnedNotes) => {
+        setNotes(notes.concat(returnedNotes))
         setNewNote('')
       }
     )
