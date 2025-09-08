@@ -8,15 +8,14 @@ const App = () => {
   const [newNote, setNewNote] = useState('new note...')
   const [showAll, setShowAll] = useState(true)
 
+  // Fetch the notes from the JSON server 
   useEffect(() => {
     noteService.getAll().then(
       (response) => {
-        // console.log(response.data)
         setNotes(response.data)
       }
     )
   }, [])
-  console.log('rendered', notes.length, 'notes')
 
   const addNote = (event) => {
     event.preventDefault()
