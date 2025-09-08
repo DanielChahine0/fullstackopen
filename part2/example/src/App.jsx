@@ -37,12 +37,16 @@ const App = () => {
 
   // Adds a new note
   const addNote = (event) => {
+    // Prevent Default Behaviour
     event.preventDefault()
+
+    // Create a note Object
     const noteObject = {
       content: newNote,
       important: Math.random() < 0.5
     }
 
+    // Add the note to the server
     noteService.create(noteObject).then(
       returnedNotes => {
         setNotes(notes.concat(returnedNotes))

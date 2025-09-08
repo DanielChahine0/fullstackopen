@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 const Filter = ({ filteredWord, handleFilterChange }) => {
   return (
@@ -43,16 +43,6 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filteredWord, setFilteredWord] = useState('')
 
-  const hook = () => {
-    axios.get('http://localhost:3001/persons').then(
-      (response) => {
-        setPersons(response.data)
-      }
-    )
-  }
-
-  useEffect(hook, [])
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -65,23 +55,40 @@ const App = () => {
     setFilteredWord(event.target.value)
   }
 
+  // Load all the persons
+  useEffect(() => {
+    personService.getAll().then(
+      initialPersons => {
+        setPersons(initialPersons)
+      }
+    )
+  }, [])
+
   const addName = (event) => {
+    // Prevent the Default Behaviour
     event.preventDefault()
-    console.log(event)
+    
+    // Check if the person already exist
     if (persons.map(p => p.name).indexOf(newName) !== -1) {
       alert(`${newName} is already added to phonebook`)
-      
       return
     }
 
+    // If not, then create it
     const newPerson = {
       name: newName,
       number: newNumber,
       id: persons.length + 1
     }
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewNumber('')
+
+    // Add that person to the server
+    personService.create(newPerson).then(
+      returnedPersons => {
+        setPersons(persons.concat(returnedPersons))
+        setNewName('')
+        setNewNumber('')
+      }
+    )
   }
 
   return (
