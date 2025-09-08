@@ -11,7 +11,7 @@ const App = () => {
   // Fetch the notes from the JSON server 
   useEffect(() => {
     noteService.getAll().then(
-      (initialNotes) => {
+      initialNotes => {
         setNotes(initialNotes)
       }
     )
@@ -25,13 +25,8 @@ const App = () => {
 
     // Update the server & the state variable 
     noteService.update(id, changedNote).then(
-      (returnedNotes) => {
-        setNotes(notes.map(
-          (note) => {
-            if (note.id === id) return returnedNotes
-            return note
-          }
-        ))
+      returnedNotes => {
+        setNotes(notes.map(note => note.id === id ? returnedNotes : note))
       }
     )
   }
@@ -45,7 +40,7 @@ const App = () => {
     }
 
     noteService.create(noteObject).then(
-      (returnedNotes) => {
+      returnedNotes => {
         setNotes(notes.concat(returnedNotes))
         setNewNote('')
       }
