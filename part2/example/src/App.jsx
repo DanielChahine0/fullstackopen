@@ -51,10 +51,12 @@ const App = () => {
     
     axios.put(url, changedNote).then(
       (response) => {
-        setNotes(notes.map((note) => {
-          if (note.id === id) return response.data
-          else return note
-        }))
+        setNotes(notes.map(
+          (note) => {
+            if (note.id === id) return response.data
+            return note
+        }
+      ))
       }
     )
   }
