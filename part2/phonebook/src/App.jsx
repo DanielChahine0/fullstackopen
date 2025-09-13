@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
+import Person from './components/Person'
 
 const Filter = ({ filteredWord, handleFilterChange }) => {
   return (
@@ -25,12 +26,16 @@ const PersonForm = ({addName, newName, newNumber, handleNameChange, handleNumber
   )
 }
 
-const Persons = ({ persons, filteredWord }) => {
+const Persons = ({ persons, filteredWord, deletePerson }) => {
   return (
     <ul>
       {persons.map(person => {
         if (person.name.includes(filteredWord)){
-          return <li key={person.id}>{person.name} {person.number}</li>
+          
+          return <Person
+            key={person.id} 
+            person={person} 
+            handleDelete={() => deletePerson(person.id)}/>
         }
       })}
     </ul>
@@ -55,6 +60,7 @@ const App = () => {
     setFilteredWord(event.target.value)
   }
 
+
   // Load all the persons
   useEffect(() => {
     personService.getAll().then(
@@ -78,7 +84,6 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
     }
 
     // Add that person to the server
@@ -89,6 +94,21 @@ const App = () => {
         setNewNumber('')
       }
     )
+  }
+
+  const deletePerson = (id) => {
+    const person = persons.find(p => p.id === id)
+    if (window.confirm(`Delete ${person.name} ?`)) {
+      personService.removePerson(id).then(
+        () => {
+          setPersons(persons.filter(p => p.id !== id))
+        }
+      ).catch(error => {
+        console.log(error)
+        alert(`the person '${person.name}' was already deleted from server`)
+        setPersons(persons.filter(p => p.id !== id))
+      })
+    }
   }
 
   return (
@@ -112,6 +132,7 @@ const App = () => {
       <Persons 
         persons={persons} 
         filteredWord={filteredWord} 
+        deletePerson={(id) => deletePerson(id)}
       />
     </div>
   )
