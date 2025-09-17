@@ -71,27 +71,45 @@ const App = () => {
   }, [])
 
   const addName = (event) => {
+    const eraseInputs = () => {
+      setNewName('')
+      setNewNumber('')
+    }
+
     // Prevent the Default Behaviour
     event.preventDefault()
     
-    // Check if the person already exist
+    // Check if the person already exist (by name)
     if (persons.map(p => p.name).indexOf(newName) !== -1) {
-      alert(`${newName} is already added to phonebook`)
+      // Ask the user if they want to replace the number
+      if (confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        
+        // Find the person that already exists and update it
+        const person = persons.find(p => p.name === newName)
+        personService.update(person.id, { ...person, number: newNumber }).then(
+          returnedPerson => {
+            setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+            eraseInputs()
+          }
+        )
+
+      } else {
+        eraseInputs()
+      }
       return
     }
 
-    // If not, then create it
+    // If the person doesn't exist, then create him
     const newPerson = {
       name: newName,
       number: newNumber,
     }
 
-    // Add that person to the server
+    // Add the new person created to the server
     personService.create(newPerson).then(
       returnedPersons => {
         setPersons(persons.concat(returnedPersons))
-        setNewName('')
-        setNewNumber('')
+        eraseInputs()
       }
     )
   }
