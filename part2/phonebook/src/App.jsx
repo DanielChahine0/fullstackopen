@@ -85,24 +85,27 @@ const App = () => {
       setTimeout(() => {setMessage(null)}, 5000)
     }
 
-    // Check if the person already exist (by name)
-    if (persons.map(p => p.name).indexOf(newName) !== -1) {
-      // Ask the user if they want to replace the number
-      if (confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        
-        // Find the person that already exists and update it
-        const person = persons.find(p => p.name === newName)
-        personService.update(person.id, { ...person, number: newNumber }).then(
-          returnedPerson => {
-            setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
-            notify(`Updated ${returnedPerson.name}`)
-            resetInputs()
-          }
-        )
+    const existingPerson = persons.find(p => p.name === newName)
 
-      } else {
+    // Check if the person already exist (by name)
+    if (existingPerson) {
+      const confirmed = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`) 
+      
+      // Ask the user if they want to replace the number
+      if (!confirmed) {
         resetInputs()
+        return
       }
+
+      // Find the person that already exists and update it
+      const person = persons.find(p => p.name === newName)
+      personService.update(person.id, { ...person, number: newNumber }).then(
+        returnedPerson => {
+          setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+          notify(`Updated ${returnedPerson.name}`)
+          resetInputs()
+        }
+      )
       return
     }
 
