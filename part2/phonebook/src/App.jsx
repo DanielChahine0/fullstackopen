@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 import Person from './components/Person'
+import Notification from './components/Notification'
 
 const Filter = ({ filteredWord, handleFilterChange }) => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filteredWord, setFilteredWord] = useState('')
+  const [message, setMessage] = useState(null)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -71,14 +73,18 @@ const App = () => {
   }, [])
 
   const addName = (event) => {
-    const eraseInputs = () => {
+    event.preventDefault()
+    
+    const resetInputs = () => {
       setNewName('')
       setNewNumber('')
     }
 
-    // Prevent the Default Behaviour
-    event.preventDefault()
-    
+    const notify = (text) => {
+      setMessage(text)
+      setTimeout(() => {setMessage(null)}, 5000)
+    }
+
     // Check if the person already exist (by name)
     if (persons.map(p => p.name).indexOf(newName) !== -1) {
       // Ask the user if they want to replace the number
@@ -89,12 +95,13 @@ const App = () => {
         personService.update(person.id, { ...person, number: newNumber }).then(
           returnedPerson => {
             setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
-            eraseInputs()
+            notify(`Updated ${returnedPerson.name}`)
+            resetInputs()
           }
         )
 
       } else {
-        eraseInputs()
+        resetInputs()
       }
       return
     }
@@ -109,7 +116,8 @@ const App = () => {
     personService.create(newPerson).then(
       returnedPersons => {
         setPersons(persons.concat(returnedPersons))
-        eraseInputs()
+        notify(`Added ${newPerson.name}`)
+        resetInputs()
       }
     )
   }
@@ -132,6 +140,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter 
         filteredWord={filteredWord} 
         handleFilterChange={handleFilterChange}
