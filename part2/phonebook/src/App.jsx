@@ -49,6 +49,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filteredWord, setFilteredWord] = useState('')
   const [message, setMessage] = useState(null)
+  const [warningStatus, setWarningStatus] = useState(false)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -80,7 +81,8 @@ const App = () => {
       setNewNumber('')
     }
 
-    const notify = (text) => {
+    const notify = (text, warningStat) => {
+      setWarningStatus(warningStat)
       setMessage(text)
       setTimeout(() => {setMessage(null)}, 5000)
     }
@@ -102,12 +104,12 @@ const App = () => {
       personService.update(person.id, { ...person, number: newNumber }).then(
         returnedPerson => {
           setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
-          notify(`Updated ${returnedPerson.name}`)
+          notify(`Updated ${returnedPerson.name}`, true)
           resetInputs()
         }
       ).catch(
         error => {
-          notify(`Information of ${person.name} has already been removed from the server`);
+          notify(`Information of ${person.name} has already been removed from the server`, false);
         }
       )
       return
@@ -123,7 +125,7 @@ const App = () => {
     personService.create(newPerson).then(
       returnedPersons => {
         setPersons(persons.concat(returnedPersons))
-        notify(`Added ${newPerson.name}`)
+        notify(`Added ${newPerson.name}`, true)
         resetInputs()
       }
     )
@@ -147,7 +149,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message}/>
+      <Notification message={message} good={warningStatus}/>
       <Filter 
         filteredWord={filteredWord} 
         handleFilterChange={handleFilterChange}
