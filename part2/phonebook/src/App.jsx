@@ -105,6 +105,10 @@ const App = () => {
           notify(`Updated ${returnedPerson.name}`)
           resetInputs()
         }
+      ).catch(
+        error => {
+          notify(`Information of ${person.name} has already been removed from the server`);
+        }
       )
       return
     }
