@@ -4,10 +4,10 @@ const Notification = ({ message, good }) => {
   }
 
   return (
-    <div className="notification">
-      <div className={good ? 'message' : 'warning'}>
-          {message}
-        </div>
+    <div className={good ? 'message' : 'warning'}>
+      <div className='notification'>
+        {message}
+      </div>
     </div>
     
   )
