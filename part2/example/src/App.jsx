@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import noteService from './services/notes'
 
 const App = () => {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(null)
   const [newNote, setNewNote] = useState('new note...')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState('some error happened...')
@@ -19,6 +19,10 @@ const App = () => {
       }
     )
   }, [])
+
+  if (notes === null) {
+    return null
+  }
 
   // Changes the importance of a note
   const toggleImportanceOf = (id) => {
