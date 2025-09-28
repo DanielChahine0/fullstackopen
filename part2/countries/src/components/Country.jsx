@@ -1,9 +1,9 @@
 const Country = ({ country }) => {
     console.log(country)
     return (
-        <div>
+        <li>
             {country.name}
-        </div>
+        </li>
     )
 }
 

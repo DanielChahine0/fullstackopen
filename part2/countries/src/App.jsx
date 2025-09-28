@@ -27,16 +27,19 @@ const Countries = ({ countries, filter }) => {
       </div>
     )
   }
+  else if (visible.length > 1){
+    return (
+      <ul>
+        <h1>BETWEEN</h1>
+        {visible.map(country => (
+          <Country country={country} />
+        ))}
+      </ul>
+    )
+  }
   else {
     return (
-      <div>
-        <ul>
-          <h1>BETWEEN</h1>
-          {visible.map(country => (
-            <Country country={country}/>
-          ))}
-        </ul>
-      </div>
+      <p>There is no country with this</p>
     )
   }
 }
