@@ -11,14 +11,17 @@ const Filter = ({ value, onChange }) => {
 }
 
 const Countries = ({ countries, filter }) => {
+  if (filter === ""){
+    return null
+  }
   const normalizedFilter = filter.trim().toLowerCase();
   const visible = normalizedFilter !== ""
     ? countries.filter(c => c.name.common.toLowerCase().includes(normalizedFilter))
     : countries
 
   if (visible.length > 10) {
-    return <p>Too many matches, specify another filter</p>
-  } 
+    return <div>Too many matches, specify another filter</div>
+  }
   else if (visible.length === 1) {
     const country = visible[0]
     return (
@@ -38,7 +41,7 @@ const Countries = ({ countries, filter }) => {
   }
   else {
     return (
-      <p>There is no country with this</p>
+      <div>There is no country with this name</div>
     )
   }
 }
