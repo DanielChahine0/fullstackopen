@@ -9,14 +9,45 @@ const Filter = ({ value, onChange }) => {
   )
 }
 
+const Countries = ({ countries, filter }) => {
+  const normalizedFilter = filter.trim().toLowerCase()
+  const visible = normalizedFilter
+    ? countries.filter(c => c.name.common.toLowerCase().includes(normalizedFilter))
+    : countries
+
+  if (visible.length > 10) {
+    return <p>Too many matches, specify another filter</p>
+  } else if (visible.length === 1) {
+    const country = visible[0]
+    return (
+      <div>
+        <h2>{country.name.common}</h2>
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        <h2>between 2 and 10</h2>
+      </div>
+    )
+  }
+}
+
 const App = () => {
   const [filter, setFilter] = useState('')
   const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    const searchedCountries = countryService.getAll()
-    setCountries(searchedCountries);
-  }, [filter])
+    // fetch countries once on mount
+    countryService.getAll()
+      .then(data => {
+        setCountries(data)
+      })
+      .catch(err => {
+        console.error('failed to fetch countries', err)
+      })
+  }, [])
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
@@ -29,7 +60,7 @@ const App = () => {
   return (
     <div>
       <Filter value={filter} onChange={handleFilterChange} />
-      {console.log(countries)}
+      {countries.length > 0 && <Countries countries={countries} filter={filter} />}
     </div>
   )
 }
