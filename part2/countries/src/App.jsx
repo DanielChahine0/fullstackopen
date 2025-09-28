@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import countryService from './services/countries'
 import Country from './components/Country'
+import DisplayCountry from './components/DisplayCountry'
 
 const Filter = ({ value, onChange }) => {
   return (
@@ -26,7 +27,7 @@ const Countries = ({ countries, filter }) => {
     const country = visible[0]
     return (
       <div>
-        <h2>{country.name.common}</h2>
+        <DisplayCountry country={country} />
       </div>
     )
   }

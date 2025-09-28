@@ -1,5 +1,5 @@
 const Country = ({ country }) => {
-    console.log(country)
+    // console.log(country)
     return (
         <div>
             {country.name?.common ?? country.name}
