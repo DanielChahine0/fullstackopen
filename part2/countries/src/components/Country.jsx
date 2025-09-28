@@ -4,9 +4,9 @@ const Country = ({ country }) => {
     // keep the log for debugging
     console.log(country)
     return (
-        <p>
+        <div>
             {country.name?.common ?? country.name}
-        </p>
+        </div>
     )
 }
 

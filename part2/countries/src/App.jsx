@@ -29,12 +29,11 @@ const Countries = ({ countries, filter }) => {
   }
   else if (visible.length > 1){
     return (
-      <ul>
-        <h1>BETWEEN</h1>
+      <div>
         {visible.map(country => (
           <Country key={country.cca3} country={country} />
         ))}
-      </ul>
+      </div>
     )
   }
   else {
