@@ -10,8 +10,8 @@ const Filter = ({ value, onChange }) => {
 }
 
 const Countries = ({ countries, filter }) => {
-  const normalizedFilter = filter.trim().toLowerCase()
-  const visible = normalizedFilter
+  const normalizedFilter = filter.trim().toLowerCase();
+  const visible = normalizedFilter !== ""
     ? countries.filter(c => c.name.common.toLowerCase().includes(normalizedFilter))
     : countries
 
@@ -28,7 +28,11 @@ const Countries = ({ countries, filter }) => {
   else {
     return (
       <div>
-        <h2>between 2 and 10</h2>
+        <ul>
+          {visible.map(country => (
+            <Country></Country>
+          ))}
+        </ul>
       </div>
     )
   }
