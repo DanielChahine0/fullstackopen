@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import countryService from './services/countries'
+import Country from './components/Country'
 
 const Filter = ({ value, onChange }) => {
   return (
@@ -17,7 +18,8 @@ const Countries = ({ countries, filter }) => {
 
   if (visible.length > 10) {
     return <p>Too many matches, specify another filter</p>
-  } else if (visible.length === 1) {
+  } 
+  else if (visible.length === 1) {
     const country = visible[0]
     return (
       <div>
@@ -29,8 +31,9 @@ const Countries = ({ countries, filter }) => {
     return (
       <div>
         <ul>
+          <h1>BETWEEN</h1>
           {visible.map(country => (
-            <Country></Country>
+            <Country country={country}/>
           ))}
         </ul>
       </div>
