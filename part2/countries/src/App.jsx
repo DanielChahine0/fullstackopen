@@ -32,7 +32,7 @@ const Countries = ({ countries, filter }) => {
       <ul>
         <h1>BETWEEN</h1>
         {visible.map(country => (
-          <Country country={country} />
+          <Country key={country.cca3} country={country} />
         ))}
       </ul>
     )
