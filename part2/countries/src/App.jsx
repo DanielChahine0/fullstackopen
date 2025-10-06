@@ -3,6 +3,7 @@ import countryService from './services/countries'
 import Country from './components/Country'
 import DisplayCountry from './components/DisplayCountry'
 
+
 const Filter = ({ value, onChange }) => {
   return (
     <div>
@@ -12,13 +13,29 @@ const Filter = ({ value, onChange }) => {
 }
 
 const Countries = ({ countries, filter }) => {
+  const [visible, setVisible] = useState([]);
+  
+  const normalizedFilter = filter.trim().toLowerCase();
+  const filteredCountries = normalizedFilter !== ""
+    ? countries.filter(c => c.name.common.toLowerCase().includes(normalizedFilter))
+    : countries;
+  
+  useEffect(() => {
+    setVisible(filteredCountries);
+  }, [filter, countries]);
+  
+  const handleShow = (country) => {
+    setVisible([country]);
+  }
+
+  useEffect(() => {
+    console.log('visible countries changed', visible);
+  }, [visible]);
+
+  // All hooks are called above - now we can do early returns
   if (filter === ""){
     return null
   }
-  const normalizedFilter = filter.trim().toLowerCase();
-  const visible = normalizedFilter !== ""
-    ? countries.filter(c => c.name.common.toLowerCase().includes(normalizedFilter))
-    : countries
 
   if (visible.length > 10) {
     return <div>Too many matches, specify another filter</div>
@@ -35,7 +52,11 @@ const Countries = ({ countries, filter }) => {
     return (
       <div>
         {visible.map(country => (
-          <Country key={country.cca3} country={country} />
+          <Country 
+            key={country.cca3}
+            country={country}
+            handleShow={() => handleShow(country)}
+          />
         ))}
       </div>
     )
