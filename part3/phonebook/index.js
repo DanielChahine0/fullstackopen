@@ -29,16 +29,27 @@ const persons = [
 ]
 
 // ============== ROUTES ==============
-app.get('/api/persons', (request, response) => {
-    response.json(persons)
-})
-
 app.get('/info', (request, response) => {
     const d = new Date();
     response.send(
         `<p>Phonebook has infro for ${persons.length} people</p>` + 
         `<p>${d}</p>`
     )
+})
+
+app.get('/api/persons', (request, response) => {
+    response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+    const id = request.params.id;
+    person = persons.find(n => (n.id === id))
+    if (person){
+        response.json(person)
+    }
+    else{
+        response.status(404).end()
+    }
 })
 
 // ============== START THE SERVER ==============
