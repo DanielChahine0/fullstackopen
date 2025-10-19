@@ -1,8 +1,22 @@
+// ============== IMPORTS ==============
 const express = require('express')
 const app = express()
 
-app.use(express.json())
+const requestLogger = (request, response, next) => {
+    console.log("Method: ", request.method);
+    console.log("Path: ", request.path);
+    console.log("Body: ", request.body);
+    console.log("---");
+    next()
+}
 
+
+// ------------- MIDDLEWARE ==============
+app.use(express.json())
+app.use(requestLogger)
+
+
+// ============== DATA ==============
 let notes = [
   {
     id: "1",
@@ -21,6 +35,8 @@ let notes = [
   }
 ]
 
+
+// ============== METHODS ==============
 const generateID = () => {
   const maxID = notes.length > 0
     ? Math.max(...notes.map(n => Number(n.id)))
@@ -28,6 +44,8 @@ const generateID = () => {
   return String(maxID + 1)
 }
 
+
+// ============== ROUTES ==============
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>');
 })
@@ -73,6 +91,14 @@ app.post('/api/notes', (request, response) => {
 })
 
 
+// ============== UNKNOWN ENDPOINT MIDDLEWARE ==============
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
+
+
+// ============== START THE SERVER ==============
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)

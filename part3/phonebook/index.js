@@ -2,7 +2,19 @@
 const express = require('express')
 const app = express()
 
+
+const requestLogger = (request, response, next) => {
+    console.log("Method: ", request.method);
+    console.log("Path: ", request.path);
+    console.log("Body: ", request.body);
+    console.log("---");
+    next()
+}
+
+// ------------- MIDDLEWARE ==============
 app.use(express.json())
+app.use(requestLogger)
+
 
 // ============== DATA ==============
 let persons = [
@@ -27,6 +39,8 @@ let persons = [
         number: "39-23-6423122"
     }
 ]
+
+
 // ============== METHODS ==============
 const generateId = () => {
     // Generate a random ID between 5 and 100,000
@@ -90,6 +104,13 @@ app.post('/api/persons', (request, response) => {
     persons = persons.concat(newPerson)
     response.status(201).json(newPerson)
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
 
 // ============== START THE SERVER ==============
 const PORT = 3001
