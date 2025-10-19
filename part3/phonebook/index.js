@@ -27,6 +27,12 @@ let persons = [
         number: "39-23-6423122"
     }
 ]
+// ============== METHODS ==============
+const generateId = () => {
+    // Generate a random ID between 5 and 100,000
+    return Math.floor(Math.random() * 100000 + 5)
+}
+
 
 // ============== ROUTES ==============
 app.get('/info', (request, response) => {
@@ -58,6 +64,31 @@ app.delete('/api/persons/:id', (request, response) => {
     console.log("DELETING PERSON: ", person);
     persons = persons.filter(person => (person.id !== id));
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body;
+
+    if (!body.name || !body.number) {
+        return response.status(400).json({ 
+            error: 'name or number is missing' 
+        })
+    }
+    const nameExists = persons.find(person => person.name === body.name);
+    if (nameExists) {
+        return response.status(400).json({ 
+            error: 'name must be unique' 
+        })
+    }
+
+    const newPerson = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    }
+
+    persons = persons.concat(newPerson)
+    response.status(201).json(newPerson)
 })
 
 // ============== START THE SERVER ==============
