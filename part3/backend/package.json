@@ -9,7 +9,7 @@
   "scripts": {
     "build:ui": "@powershell Remove-Item -Recurse -Force dist; cd ../../part2/example; npm run build; Copy-Item -Recurse -Force dist ../../part3/backend",
     "build:ui:notwindows": "rm -rf dist && cd ../../part2/example && npm run build && cp -r dist ../../part3/backend/",
-    "deploy:full": "npm run build:ui && git add . && git commit -m \"deploying fullstack app\" && git push heroku main",
+    "deploy:full": "npm run build:ui && git add . && git commit -m \"deploying fullstack app\" && git push",
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
