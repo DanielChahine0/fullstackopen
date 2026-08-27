@@ -1,0 +1,55 @@
+# Local archive of earlier attempts at the course. Kept on disk, never committed.
+.archive/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# The course's part 3 deploy flow commits the frontend build into the backend's dist folder.
+# To track that one build, uncomment the line below and adjust the path (relative to the repo root).
+# !part3/backend/dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test output (Vitest, Jest, Playwright)
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Caches
+.cache/
+.vite/
+.eslintcache
+*.tsbuildinfo
+
+# React Native / Expo (part 10)
+.expo/
+.expo-shared/
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
