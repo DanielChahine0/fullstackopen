@@ -10,6 +10,8 @@ No exercises here
 No exercises here
 
 ## 0.4: New note diagram
+Create a similar diagram depicting the situation where the user creates a new note on the page https://studies.cs.helsinki.fi/exampleapp/notes by writing something into the text field and clicking the Save button.
+
 ### Original Sequence Diagram
 ```mermaid
 sequenceDiagram
@@ -46,11 +48,11 @@ sequenceDiagram
 sequenceDiagram
     participant browser
     participant server
-    
+
     browser->>server:POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
     Note left of server: When the server receives the new note, it gets added to the notes
-    server-->>browser: the new list of notes and redirection to /notes
+    server-->>browser: HTTP 302 redirect to /exampleapp/notes
     deactivate server
     
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
@@ -75,11 +77,38 @@ sequenceDiagram
     server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
     deactivate server
 
-    Note right of browser: The browser executes the callback function that renders the notes
-
-    
- 
+    Note right of browser: The browser executes the callback function that renders the notes 
 ```
 
-
 ## 0.5: 
+Create a diagram depicting the situation where the user goes to the single-page app version of the notes app at https://studies.cs.helsinki.fi/exampleapp/spa.
+
+```mermaid
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes
+```
