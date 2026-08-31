@@ -1,25 +1,22 @@
-const Hello = () => {
+const Hello = (props) => {
+  console.log(props)
+  console.log(props.name)
   return (
     <div>
-      <h1>
-        Hello, this is a separate component!!
-      </h1>
+      <p>
+        Hello {props.name}, you are {props.age} years old
+      </p>
     </div>
   )
 }
 
 const App = () => {
-  const now = new Date();
-  const a = 20;
-  const b = 10;
-  console.log(now, a+b);
-  console.log("Hello from App component")
+  const name = "Daniel"
+  const age = 22
   return (
     <div>
-      <Hello />
-      <Hello />
-      <p>It is now {now.toString()}</p>
-      <p> {a} + {b} = {a+b}</p>
+      <Hello name={name} age={age}/>
+      <Hello name="Freddy" age={10+25}/>
     </div>
   )
 }
