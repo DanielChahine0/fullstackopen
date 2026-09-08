@@ -1,6 +1,23 @@
 import { useState } from 'react'
 
-const Display = ({counter}) => <div>{counter}</div>
+const History = (props) => {
+  if (props.allClicks.length === 0){
+    return (
+      <div>
+        This app is used by clicking
+      </div>
+    )
+  }
+  else{
+    return (
+      <div>
+        <p>{props.allClicks.join(' ')}</p>
+        <p>total {props.total}</p>
+      </div>
+      
+    )
+  }
+}
 
 const Button = ({onClick, text}) => {
   return (
@@ -35,12 +52,11 @@ const App = () => {
   return (
     <div>
       {left}
-      <button onClick={handleLeftClick}>left</button>
-      <button onClick={handleRightClick}>right</button>
+      <Button onClick={handleLeftClick} text='left' />
+      <Button onClick={handleRightClick} text='right' />
       {right}
-
-      <p>{allClicks.join(' ')}</p>
-      <p>total {total}</p>
+      <History allClicks={allClicks} total={total}/>
+      
     </div>
   )
 }
