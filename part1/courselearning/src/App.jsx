@@ -52,7 +52,7 @@ const App = () => {
 
   const setToValue = (newVal) => {
     const setter = () => {
-      console.log(newVal)
+      console.log("New Value: ", newVal)
       setValue(newVal)
     }
     return setter
@@ -60,18 +60,11 @@ const App = () => {
 
   return (
     <div>
-      {left}
-      <Button onClick={handleLeftClick} text='left' />
-      <Button onClick={handleRightClick} text='right' />
-      {right}
-      <History allClicks={allClicks} total={total}/>
-      
-      <Button onClick={setToValue(0)} text={0}/>
-      <Button onClick={setToValue(10)} text={10}/>
-      <Button onClick={setToValue(100)} text={100}/>
-      <Button onClick={setToValue(1000)} text={1000}/>
-
       {value}
+      <Button onClick={setToValue(0)} text={"Zero"}/>
+      <Button onClick={setToValue(10)} text={"Ten"}/>
+      <Button onClick={setToValue(value + 1)} text={"Increase"}/>
+      <Button onClick={setToValue(value - 1)} text={"Decrease"}/>
     </div>
   )
 }
