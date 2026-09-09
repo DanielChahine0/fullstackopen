@@ -21,6 +21,24 @@ const DisplayVotes = ({selected, votes}) => {
   )
 }
 
+const HighestAnecdote = ({votes, anecdotes}) => {
+  let max = 0
+  let index = 0
+  Object.keys(votes).forEach((i)=>{
+    if (votes[i] > max){
+      max = votes[i]
+      index = i
+    }
+  })
+  
+  return (
+    <div>
+      <div>{anecdotes[index]}</div>
+      <div>has {max} votes</div>
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -59,10 +77,14 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       <div>{anecdotes[selected]}</div>
       <DisplayVotes selected={selected} votes={votes}/>
       <Button text="next anecdote" onClick={changeSelected} />
       <Button text="vote" onClick={vote}/>
+
+      <h1>Anecdote with most votes</h1>
+      <HighestAnecdote votes={votes} anecdotes={anecdotes} />
     </div>
   )
 }
