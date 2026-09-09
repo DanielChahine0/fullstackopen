@@ -1,4 +1,6 @@
 import Part from './Part'
+import Sum from './Sum'
+
 
 const Content = ({parts}) => {
     return (
@@ -8,7 +10,8 @@ const Content = ({parts}) => {
                     <Part key={part.id} part={part}/>
                 )
             })}
-        </div>   
+            <Sum parts={parts}/>
+        </div>
     )
 }
 
