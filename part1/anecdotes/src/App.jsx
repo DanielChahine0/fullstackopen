@@ -38,7 +38,6 @@ const App = () => {
 
   const changeSelected = () => {
     const randomVal = Math.floor(Math.random() * anecdotes.length)
-    
     setSelected(randomVal)
   }
 
