@@ -1,8 +1,5 @@
 const Sum = ({parts}) => {
-    let sum = 0
-    for (var i = 0; i < parts.length ; i++){
-        sum += parts[i].exercises
-    }
+    const sum = parts.reduce((accumulator, item)=> accumulator + item.exercises, 0)
     return (
         <div>
             <b>total of {sum} exercises</b>
