@@ -1,4 +1,4 @@
-const PersonDisplay = ({persons, filter}) => {
+const Persons = ({persons, filter}) => {
     const filteredPeople = persons.filter((person)=>(person.name.toLowerCase()).includes(filter.toLowerCase()))
     const personsToDisplay = filter==='' ? persons : filteredPeople;
     
@@ -13,4 +13,4 @@ const PersonDisplay = ({persons, filter}) => {
     )
 }
 
-export default PersonDisplay
+export default Persons
