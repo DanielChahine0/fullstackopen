@@ -5,22 +5,21 @@ const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ]) 
-  const [newName, setNewName] = useState('Daniel..')
+  const [newName, setNewName] = useState('Daniel')
 
-  const addPerson = (event) => {
-    console.log('HI?')
-    event.preventDefault()
+  const addPerson = (e) => {
+    e.preventDefault()
 
-    const newPerson = {
-      name: newName
+    if (persons.some((person)=> person.name === newName)){
+      alert(newName + " is already in the phonebook")
+      return
     }
-    console.log(newPerson)
+    const newPerson = {name: newName}
     setPersons(persons.concat(newPerson))
   }
 
   const handleInputChange = (e) => {
     setNewName(e.target.value)
-    console.log(e.target.value)
   }
 
   return (
