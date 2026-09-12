@@ -22,13 +22,24 @@ const App = () => {
     e.preventDefault()
 
     if (persons.some((person)=> person.name === newName)){
-      alert(newName + " is already in the phonebook")
+      if (confirm(`${newName} is already added to the phone book, want to update his number?`)){
+        const newPerson = persons.find(p=>p.name === newName)
+        const newObject = {...newPerson, number: newNumber}
+        updatePerson(newObject.id, newObject)
+      }
       return
     }
     const newPerson = {name: newName, number: newNumber}
-    personService.addPerson(newPerson).then( response =>
+    personService.addPerson(newPerson).then(response =>
       setPersons(persons.concat(response))
     )
+  }
+
+  const updatePerson = (id, newObject) => {
+    const newPersons = persons.map(p => (p.id===id ? newObject : p))
+    personService.updatePerson(id, newObject).then(response =>{
+      setPersons(newPersons)
+    })
   }
 
   const deletePerson = (id) => {

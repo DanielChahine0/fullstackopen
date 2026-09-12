@@ -6,7 +6,7 @@ const Persons = ({persons, filter, deletePerson}) => {
         <ul>
             {personsToDisplay.map((person)=>{
                 return(
-                    <li key={person.name}>
+                    <li key={person.id}>
                         {person.name} {person.number}
                         <button onClick={()=>deletePerson(person.id)}>delete</button>
                     </li>
