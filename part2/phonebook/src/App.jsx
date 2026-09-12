@@ -3,26 +3,19 @@ import axios from 'axios'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('Daniel')
-  const [newPhone, setNewPhone] = useState('xxx-xxx-xxxx')
+  const [newNumber, setNewNumber] = useState('xxx-xxx-xxxx')
   const [filter, setFilter] = useState('')
 
   const hook = () => {
-    console.log('effect')
-
-    const promise = axios.get('http://localhost:3001/persons')
-    
-    const eventHandler = (response) => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
-    }
-
-    promise.then(eventHandler)
+    personService.getAll().then((response) =>
+      setPersons(response)
+    )
   }
-  
   useEffect(hook, [])
 
   const addPerson = (e) => {
@@ -32,15 +25,25 @@ const App = () => {
       alert(newName + " is already in the phonebook")
       return
     }
-    const newPerson = {name: newName, phone: newPhone}
-    setPersons(persons.concat(newPerson))
+    const newPerson = {name: newName, number: newNumber}
+    personService.addPerson(newPerson).then( response =>
+      setPersons(persons.concat(response))
+    )
+  }
+
+  const deletePerson = (id) => {
+    const personsNotDeleted = persons.filter(p=>p.id !== id)
+    console.log(personsNotDeleted)
+    personService.deletePerson(id).then(response =>{
+      setPersons(personsNotDeleted)
+    })
   }
 
   const handleInputChangeN = (e) => {
     setNewName(e.target.value)
   }
   const handleInputChangeP = (e) => {
-    setNewPhone(e.target.value)
+    setNewNumber(e.target.value)
   }
   const handleInputChangeF = (e) => {
     setFilter(e.target.value)
@@ -52,11 +55,11 @@ const App = () => {
       <Filter handleinput={handleInputChangeF}/>
 
       <h2>add a new</h2>
-      <PersonForm addPerson={addPerson} newName={newName} newPhone={newPhone} handleInputChangeN={handleInputChangeN} handleInputChangeP={handleInputChangeP}/>
+      <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleInputChangeN={handleInputChangeN} handleInputChangeP={handleInputChangeP}/>
 
       <h2>Numbers</h2>
       
-      <Persons persons={persons} filter={filter}/>
+      <Persons persons={persons} filter={filter} deletePerson={deletePerson}/>
     </div>
   )
 }
