@@ -32,11 +32,13 @@ const App = () => {
   }
 
   const deletePerson = (id) => {
-    const personsNotDeleted = persons.filter(p=>p.id !== id)
-    console.log(personsNotDeleted)
-    personService.deletePerson(id).then(response =>{
-      setPersons(personsNotDeleted)
-    })
+    if (confirm("Are you sure?")){
+      const personsNotDeleted = persons.filter(p=>p.id !== id)
+      console.log(personsNotDeleted)
+      personService.deletePerson(id).then(response =>{
+        setPersons(personsNotDeleted)
+      })
+    }
   }
 
   const handleInputChangeN = (e) => {
